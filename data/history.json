@@ -1,0 +1,53 @@
+{
+  "snapshots": [
+    {
+      "date": "2026-07-15",
+      "overall": {
+        "done": 0,
+        "total": 58
+      },
+      "tracks": {
+        "transcript": {
+          "done": 0,
+          "total": 4
+        },
+        "mmrag": {
+          "done": 0,
+          "total": 6
+        },
+        "brainmet": {
+          "done": 0,
+          "total": 5
+        },
+        "genie": {
+          "done": 0,
+          "total": 6
+        },
+        "llm-failure": {
+          "done": 0,
+          "total": 6
+        },
+        "llm-validation": {
+          "done": 0,
+          "total": 6
+        },
+        "blog-writer": {
+          "done": 0,
+          "total": 5
+        },
+        "research-team": {
+          "done": 0,
+          "total": 1
+        },
+        "pdf-summarizer": {
+          "done": 0,
+          "total": 1
+        },
+        "course": {
+          "done": 0,
+          "total": 18
+        }
+      }
+    }
+  ]
+}

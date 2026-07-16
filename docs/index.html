@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Portfolio Planning &amp; Tracking</title>
+<style>
+  :root {
+    --bg:#0b0f17; --panel:#111725; --panel-2:#0e1420; --line:#1e2636;
+    --ink:#e8edf6; --muted:#8b97ad; --accent:#6ea8fe; --accent-2:#8b7cff;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:radial-gradient(1200px 600px at 70% -10%, #14203a 0%, var(--bg) 55%);
+    color:var(--ink); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:1100px; margin:0 auto; padding:48px 24px 80px; }
+  header .eyebrow { color:var(--accent); font:600 12px/1 ui-monospace,"JetBrains Mono",monospace;
+    letter-spacing:.16em; text-transform:uppercase; margin:0 0 12px; }
+  h1 { margin:0; font-size:34px; letter-spacing:-.02em; }
+  .sub { color:var(--muted); margin:8px 0 0; }
+  .hero {
+    display:grid; grid-template-columns:auto 1fr; gap:36px; align-items:center;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line);
+    border-radius:18px; padding:28px 32px; margin:32px 0 28px;
+  }
+  .ring { position:relative; width:132px; height:132px; }
+  .ring .lbl { position:absolute; inset:0; display:grid; place-content:center; text-align:center; }
+  .ring .lbl b { font-size:30px; } .ring .lbl small { color:var(--muted); font-size:12px; }
+  .stats { display:flex; gap:32px; flex-wrap:wrap; }
+  .stat b { display:block; font-size:26px; } .stat span { color:var(--muted); font-size:13px; }
+  .hero-spark { margin-top:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+  .card {
+    background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line);
+    border-radius:14px; padding:18px 18px 16px; border-top:3px solid var(--hue);
+  }
+  .card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .card h3 { margin:0; font-size:16px; }
+  .note { color:var(--muted); margin:3px 0 0; font-size:12.5px; }
+  .pct { font-size:22px; font-weight:700; color:var(--hue); } .pct span { font-size:12px; opacity:.7; }
+  .bar { height:7px; background:#0a0e17; border:1px solid var(--line); border-radius:99px; margin:14px 0 8px; overflow:hidden; }
+  .bar span { display:block; height:100%; background:var(--hue); border-radius:99px; }
+  .counts { color:var(--muted); font-size:12.5px; }
+  .spark { display:block; margin:10px 0 6px; }
+  .card-foot { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:8px;
+    font:12px/1 ui-monospace,"JetBrains Mono",monospace; }
+  .repo { color:var(--accent); text-decoration:none; } .repo:hover { text-decoration:underline; }
+  .repo.muted, .muted { color:#5c6780; }
+  .live { color:var(--accent-2); text-decoration:none; }
+  .badge { font-size:10px; padding:2px 7px; border-radius:99px; border:1px solid var(--line); text-transform:uppercase; letter-spacing:.05em; }
+  .badge.public { color:#5ecb8b; } .badge.private { color:#c9a24b; }
+  h2.sec { font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin:0 0 16px; }
+  footer { margin-top:44px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); padding-top:18px; }
+  footer code { color:var(--accent); background:#0a0e17; padding:1px 6px; border-radius:5px; }
+  @media (max-width:640px) { .hero { grid-template-columns:1fr; } h1 { font-size:27px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Project Planning &middot; Tracking &middot; Code Review</p>
+    <h1>Portfolio Progress</h1>
+    <p class="sub">Every project's todo list in one place, tracked daily. Updated 2026-07-15 05:43 UTC.</p>
+  </header>
+
+  <section class="hero">
+    <div class="ring">
+      <svg width="132" height="132" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#1a2234" stroke-width="12"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="url(#g)" stroke-width="12"
+          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"
+          transform="rotate(-90 60 60)"/>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#8b7cff"/>
+        </linearGradient></defs>
+      </svg>
+      <div class="lbl"><div><b>0%</b><br/><small>0/58 tasks</small></div></div>
+    </div>
+    <div>
+      <div class="stats">
+        <div class="stat"><b>10</b><span>projects tracked</span></div>
+        <div class="stat"><b>10</b><span>in progress</span></div>
+        <div class="stat"><b>0</b><span>fully shipped</span></div>
+        <div class="stat"><b>58</b><span>tasks remaining</span></div>
+      </div>
+      <div class="hero-spark"><svg class="spark" viewBox="0 0 560 54" preserveAspectRatio="none" width="100%" height="54"><polygon points="0,54 0.0,52.0 560.0,52.0 560,54" fill="#6ea8fe" opacity="0.12"/><polyline points="0.0,52.0 560.0,52.0" fill="none" stroke="#6ea8fe" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="560.0" cy="52.0" r="3" fill="#6ea8fe"/></svg></div>
+    </div>
+  </section>
+
+  <h2 class="sec">Projects</h2>
+  <div class="grid">
+      <article class="card" style="--hue:#4C9BE0">
+        <div class="card-top">
+          <div>
+            <h3>Agentic Research Team</h3>
+            <p class="note">multi-agent research</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 1 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#4C9BE0" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#4C9BE0" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#4C9BE0"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/agentic_research_team">agentic_research_team</a> <span class="badge public">public</span> </div>
+      </article>
+      <article class="card" style="--hue:#8B54D6">
+        <div class="card-top">
+          <div>
+            <h3>BrainMet QA Agent</h3>
+            <p class="note">PDF Q&A reader</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 5 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#8B54D6" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#8B54D6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#8B54D6"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/brainmet_intelligent_qa_agent">brainmet_intelligent_qa_agent</a> <span class="badge private">private</span> </div>
+      </article>
+      <article class="card" style="--hue:#D45C86">
+        <div class="card-top">
+          <div>
+            <h3>Content to Blog Agent</h3>
+            <p class="note">spec stage</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 5 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#D45C86" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#D45C86" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#D45C86"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/agentic_content_extraction_blog_writer">agentic_content_extraction_blog_writer</a> <span class="badge public">public</span> </div>
+      </article>
+      <article class="card" style="--hue:#2E9E4F">
+        <div class="card-top">
+          <div>
+            <h3>GENIE TCGA BrainMet</h3>
+            <p class="note">research pipeline</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 6 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#2E9E4F" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#2E9E4F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#2E9E4F"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/genie_tcga_impact_brainmet">genie_tcga_impact_brainmet</a> <span class="badge private">private</span> </div>
+      </article>
+      <article class="card" style="--hue:#D9722B">
+        <div class="card-top">
+          <div>
+            <h3>LLM Failure Analysis</h3>
+            <p class="note">fabrication study</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 6 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#D9722B" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#D9722B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#D9722B"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/llm_summarizer_failure_analysis">llm_summarizer_failure_analysis</a> <span class="badge private">private</span> </div>
+      </article>
+      <article class="card" style="--hue:#B8890E">
+        <div class="card-top">
+          <div>
+            <h3>LLM Validation</h3>
+            <p class="note">accuracy study</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 6 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#B8890E" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#B8890E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#B8890E"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/llm_summarizer_validation">llm_summarizer_validation</a> <span class="badge private">private</span> </div>
+      </article>
+      <article class="card" style="--hue:#5A6472">
+        <div class="card-top">
+          <div>
+            <h3>Learning</h3>
+            <p class="note">courses and certs</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 18 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#5A6472" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#5A6472" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#5A6472"/></svg>
+        <div class="card-foot"><span class="repo muted">no repo</span>  </div>
+      </article>
+      <article class="card" style="--hue:#3B6FE0">
+        <div class="card-top">
+          <div>
+            <h3>Multimodal RAG Tutor</h3>
+            <p class="note">live on Azure</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 6 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#3B6FE0" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#3B6FE0" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#3B6FE0"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/multimodal_rag_application">multimodal_rag_application</a> <span class="badge public">public</span> <a class="live" href="https://robertjam954.github.io/multimodal_rag_application/">live &#8599;</a></div>
+      </article>
+      <article class="card" style="--hue:#00A6A6">
+        <div class="card-top">
+          <div>
+            <h3>Paper Analyst</h3>
+            <p class="note">PDF summarizer chatbot</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 1 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#00A6A6" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#00A6A6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#00A6A6"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/local_pdf_summarizer_chatbot">local_pdf_summarizer_chatbot</a> <span class="badge public">public</span> <a class="live" href="https://robertjam954.github.io/local_pdf_summarizer_chatbot/">live &#8599;</a></div>
+      </article>
+      <article class="card" style="--hue:#0E9E8E">
+        <div class="card-top">
+          <div>
+            <h3>Voice Summarizer</h3>
+            <p class="note">transcription app</p>
+          </div>
+          <div class="pct">0<span>%</span></div>
+        </div>
+        <div class="bar"><span style="width:0%"></span></div>
+        <div class="counts">0 / 4 done</div>
+        <svg class="spark" viewBox="0 0 220 40" preserveAspectRatio="none" width="100%" height="40"><polygon points="0,40 0.0,38.0 220.0,38.0 220,40" fill="#0E9E8E" opacity="0.12"/><polyline points="0.0,38.0 220.0,38.0" fill="none" stroke="#0E9E8E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="220.0" cy="38.0" r="3" fill="#0E9E8E"/></svg>
+        <div class="card-foot"><a class="repo" href="https://github.com/Robertjam954/local-ai-transcript-app">local-ai-transcript-app</a> <span class="badge public">public</span> <a class="live" href="https://robertjam954.github.io/local-ai-transcript-app/">live &#8599;</a></div>
+      </article>
+  </div>
+
+  <footer>
+    Todo lists live in <code>todos/*.md</code>. Check a box with <code>[x]</code>, push, and this
+    board refreshes automatically. A snapshot is recorded every day at 07:00 UTC to build the trend lines.
+    Every project repo runs a Claude code-quality review on each pull request.
+  </footer>
+</div>
+</body>
+</html>

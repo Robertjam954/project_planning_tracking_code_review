@@ -1,0 +1,105 @@
+{
+  "owner": "Robertjam954",
+  "tracks": [
+    {
+      "key": "transcript",
+      "label": "Voice Summarizer",
+      "note": "transcription app",
+      "hue": "#0E9E8E",
+      "todo": "voice-summarizer.md",
+      "repo": "local-ai-transcript-app",
+      "visibility": "public",
+      "url": "https://robertjam954.github.io/local-ai-transcript-app/"
+    },
+    {
+      "key": "mmrag",
+      "label": "Multimodal RAG Tutor",
+      "note": "live on Azure",
+      "hue": "#3B6FE0",
+      "todo": "multimodal-rag-tutor.md",
+      "repo": "multimodal_rag_application",
+      "visibility": "public",
+      "url": "https://robertjam954.github.io/multimodal_rag_application/"
+    },
+    {
+      "key": "brainmet",
+      "label": "BrainMet QA Agent",
+      "note": "PDF Q&A reader",
+      "hue": "#8B54D6",
+      "todo": "brainmet-qa-agent.md",
+      "repo": "brainmet_intelligent_qa_agent",
+      "visibility": "private",
+      "url": ""
+    },
+    {
+      "key": "genie",
+      "label": "GENIE TCGA BrainMet",
+      "note": "research pipeline",
+      "hue": "#2E9E4F",
+      "todo": "genie-tcga-brainmet.md",
+      "repo": "genie_tcga_impact_brainmet",
+      "visibility": "private",
+      "url": ""
+    },
+    {
+      "key": "llm-failure",
+      "label": "LLM Failure Analysis",
+      "note": "fabrication study",
+      "hue": "#D9722B",
+      "todo": "llm-failure-analysis.md",
+      "repo": "llm_summarizer_failure_analysis",
+      "visibility": "private",
+      "url": ""
+    },
+    {
+      "key": "llm-validation",
+      "label": "LLM Validation",
+      "note": "accuracy study",
+      "hue": "#B8890E",
+      "todo": "llm-validation.md",
+      "repo": "llm_summarizer_validation",
+      "visibility": "private",
+      "url": ""
+    },
+    {
+      "key": "blog-writer",
+      "label": "Content to Blog Agent",
+      "note": "spec stage",
+      "hue": "#D45C86",
+      "todo": "content-to-blog-agent.md",
+      "repo": "agentic_content_extraction_blog_writer",
+      "visibility": "public",
+      "url": ""
+    },
+    {
+      "key": "research-team",
+      "label": "Agentic Research Team",
+      "note": "multi-agent research",
+      "hue": "#4C9BE0",
+      "todo": "agentic-research-team.md",
+      "repo": "agentic_research_team",
+      "visibility": "public",
+      "url": ""
+    },
+    {
+      "key": "pdf-summarizer",
+      "label": "Paper Analyst",
+      "note": "PDF summarizer chatbot",
+      "hue": "#00A6A6",
+      "todo": "pdf-summarizer.md",
+      "repo": "local_pdf_summarizer_chatbot",
+      "visibility": "public",
+      "url": "https://robertjam954.github.io/local_pdf_summarizer_chatbot/"
+    },
+    {
+      "key": "course",
+      "label": "Learning",
+      "note": "courses and certs",
+      "hue": "#5A6472",
+      "todo": "learning.md",
+      "repo": "",
+      "visibility": "n/a",
+      "url": ""
+    }
+  ]
+}
