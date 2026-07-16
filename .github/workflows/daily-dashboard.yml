@@ -33,6 +33,15 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Sync each project's STATUS.md into todos/
+        # Pulls STATUS.md from every project repo. Public repos work with the
+        # default token; private repos need a PAT with repo scope in the
+        # PORTFOLIO_TOKEN secret. Missing STATUS.md -> keeps the existing todo.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.PORTFOLIO_TOKEN || secrets.GITHUB_TOKEN }}
+        run: python scripts/sync_status.py
+
       - name: Build dashboard + record daily snapshot
         run: python scripts/build_dashboard.py
 
@@ -40,7 +49,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html data/history.json
+          git add docs/index.html data/history.json todos/
           if git diff --cached --quiet; then
             echo "No dashboard changes today."
           else

@@ -32,6 +32,15 @@ To update progress, **check a box** (`[ ]` -> `[x]`) and push. The daily job
 [`projects.json`](projects.json) is the registry that maps each todo file to its
 repo, colour, and live URL.
 
+### Source of truth: each project's `STATUS.md`
+
+Every project repo carries its own `STATUS.md` (same checkbox format). The daily
+job runs `scripts/sync_status.py` first, which pulls each repo's `STATUS.md` into
+`todos/<slug>.md` - so a project's live status rolls up to this board
+automatically. Public repos sync with the default token; private repos need a
+PAT with `repo` scope in a `PORTFOLIO_TOKEN` secret. Repos without a `STATUS.md`
+keep their local `todos/<slug>.md` as the source.
+
 ## Daily tracking
 
 `.github/workflows/daily-dashboard.yml` runs at **07:00 UTC** (and on every push
