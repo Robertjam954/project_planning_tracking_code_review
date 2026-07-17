@@ -41,6 +41,36 @@ automatically. Public repos sync with the default token; private repos need a
 PAT with `repo` scope in a `PORTFOLIO_TOKEN` secret. Repos without a `STATUS.md`
 keep their local `todos/<slug>.md` as the source.
 
+## Planning a new agentic app
+
+Every agentic AI app is planned against one fixed **component matrix** so nothing
+gets silently dropped — infra/DB, agents, tools, memory, prompts, frontend, and
+tracing are each either built, reused, or explicitly marked N/A with a reason.
+
+- **Prep workflow:** [`docs/agentic-app-prep-workflow.md`](docs/agentic-app-prep-workflow.md)
+  — the three phases (curate context → plan → implement) and what each component
+  category means, mapped to both the FastAPI+Anthropic template and multi-agent
+  frameworks (LangGraph / MS Agent Framework).
+- **Plan template:** [`templates/agentic-app-plan-template.md`](templates/agentic-app-plan-template.md)
+  — includes a mandatory component-coverage matrix.
+- **Status ledger:** [`templates/agentic-app-STATUS.md`](templates/agentic-app-STATUS.md)
+  — one checkbox section per category; rolls up to the dashboard.
+- **Generate a starter ledger** for a new project:
+
+  ```bash
+  python scripts/new_agentic_project.py "My Agent App" --framework LangGraph -o STATUS.md
+  ```
+
+The reference implementation
+([`agentic-ai-app-template`](https://github.com/Robertjam954/agentic-ai-app-template))
+has a part for every category.
+
+## Preview the dashboard (demo)
+
+`scripts/build_demo_dashboard.py` regenerates a public, fake-data copy of the
+board (same renderer, invented projects) for portfolio screenshots — published at
+`portfolio-dashboard-demo`. It never touches real data.
+
 ## Daily tracking
 
 `.github/workflows/daily-dashboard.yml` runs at **07:00 UTC** (and on every push
