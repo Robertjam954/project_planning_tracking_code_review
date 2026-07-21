@@ -1,12 +1,15 @@
 # Project Planning, Tracking & Code Review
 
-One control room for the whole AI-engineering portfolio. It does three things:
+One control room for the whole AI-engineering portfolio. It does **four** things:
 
 1. **Holds every project's todo list** as plain markdown in [`todos/`](todos/).
 2. **Tracks progress visually, every day** - a scheduled job counts checked
    boxes, records a snapshot, and rebuilds a dashboard published to GitHub Pages.
 3. **Runs a Claude code-quality review** on every pull request across all
    project repos, from one centrally-managed workflow.
+4. **Drives planning, tracking, and reviewing via LLM agents** - a LangGraph supervisor
+   that routes natural-language requests to Planner / Tracker / Reviewer / Historian workers,
+   with durable, queryable conversation memory (see [`agents/`](agents/) and [`AGENTS.md`](AGENTS.md)).
 
 ## Live dashboard
 
@@ -61,9 +64,40 @@ tracing are each either built, reused, or explicitly marked N/A with a reason.
   python scripts/new_agentic_project.py "My Agent App" --framework LangGraph -o STATUS.md
   ```
 
+  Or use the agent:
+
+  ```bash
+  python -m agents "plan a new invoice parser agent"
+  ```
+
 The reference implementation
 ([`agentic-ai-app-template`](https://github.com/Robertjam954/agentic-ai-app-template))
 has a part for every category.
+
+## Agent layer (new in this repo)
+
+The control room itself is now agentic. See [`AGENTS.md`](AGENTS.md) for setup and usage.
+
+```bash
+# Install agent dependencies
+pip install -r agents-requirements.txt
+cp .env.example .env  # add ANTHROPIC_API_KEY + optional PORTFOLIO_TOKEN
+
+# Plan a new app
+python -m agents "plan a new chatbot for my product docs"
+
+# Track progress
+python -m agents "which projects are stalled"
+
+# Code quality summary
+python -m agents "show me common quality issues"
+
+# Recall past sessions
+python -m agents --list-sessions
+python -m agents --history <session_id>
+```
+
+See [`docs/agents-plan.md`](docs/agents-plan.md) and [`docs/adr/`](docs/adr/) for architecture.
 
 ## Preview the dashboard (demo)
 

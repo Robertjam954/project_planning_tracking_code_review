@@ -1,0 +1,6 @@
+# Control room agents - pinned dependencies
+anthropic>=0.42.0
+langgraph>=0.2.20
+langgraph-checkpoint-sqlite>=1.0.0
+langchain-core>=0.3.0
+python-dotenv>=1.0.0

@@ -146,6 +146,112 @@
           "total": 18
         }
       }
+    },
+    {
+      "date": "2026-07-19",
+      "overall": {
+        "done": 23,
+        "total": 163
+      },
+      "tracks": {
+        "transcript": {
+          "done": 0,
+          "total": 8
+        },
+        "mmrag": {
+          "done": 8,
+          "total": 38
+        },
+        "brainmet": {
+          "done": 0,
+          "total": 5
+        },
+        "genie": {
+          "done": 0,
+          "total": 7
+        },
+        "llm-failure": {
+          "done": 0,
+          "total": 6
+        },
+        "llm-validation": {
+          "done": 0,
+          "total": 7
+        },
+        "blog-writer": {
+          "done": 11,
+          "total": 32
+        },
+        "research-team": {
+          "done": 0,
+          "total": 1
+        },
+        "pdf-summarizer": {
+          "done": 2,
+          "total": 5
+        },
+        "control-room": {
+          "done": 2,
+          "total": 36
+        },
+        "course": {
+          "done": 0,
+          "total": 18
+        }
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "overall": {
+        "done": 23,
+        "total": 163
+      },
+      "tracks": {
+        "transcript": {
+          "done": 0,
+          "total": 8
+        },
+        "mmrag": {
+          "done": 8,
+          "total": 38
+        },
+        "brainmet": {
+          "done": 0,
+          "total": 5
+        },
+        "genie": {
+          "done": 0,
+          "total": 7
+        },
+        "llm-failure": {
+          "done": 0,
+          "total": 6
+        },
+        "llm-validation": {
+          "done": 0,
+          "total": 7
+        },
+        "blog-writer": {
+          "done": 11,
+          "total": 32
+        },
+        "research-team": {
+          "done": 0,
+          "total": 1
+        },
+        "pdf-summarizer": {
+          "done": 2,
+          "total": 5
+        },
+        "control-room": {
+          "done": 2,
+          "total": 36
+        },
+        "course": {
+          "done": 0,
+          "total": 18
+        }
+      }
     }
   ]
 }

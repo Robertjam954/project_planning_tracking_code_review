@@ -92,6 +92,16 @@
       "url": "https://robertjam954.github.io/local_pdf_summarizer_chatbot/"
     },
     {
+      "key": "control-room",
+      "label": "Control Room",
+      "note": "portfolio-ops agents",
+      "hue": "#6366F1",
+      "todo": "control-room.md",
+      "repo": "project_planning_tracking_code_review",
+      "visibility": "public",
+      "url": "https://robertjam954.github.io/project_planning_tracking_code_review/"
+    },
+    {
       "key": "course",
       "label": "Learning",
       "note": "courses and certs",
