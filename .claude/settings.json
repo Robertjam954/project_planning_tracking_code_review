@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "b=$(git branch --show-current 2>/dev/null); if [ \"$b\" = \"main\" ] || [ \"$b\" = \"master\" ]; then echo 'Refusing to edit on the default branch. Create a feature branch first.' >&2; exit 2; fi; exit 0",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(echo \"$CLAUDE_TOOL_INPUT\" | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{try{console.log(JSON.parse(s).tool_input.file_path||\"\")}catch{}})' 2>/dev/null); case \"$f\" in *.py) { command -v uv >/dev/null 2>&1 && uv run --quiet ruff format \"$f\" >/dev/null 2>&1; } || { command -v ruff >/dev/null 2>&1 && ruff format \"$f\" >/dev/null 2>&1; } || true;; *.ts|*.tsx|*.js|*.jsx|*.mjs|*.cjs|*.css|*.json) command -v npx >/dev/null 2>&1 && npx --no-install prettier --write \"$f\" >/dev/null 2>&1 || true;; esac; exit 0",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
