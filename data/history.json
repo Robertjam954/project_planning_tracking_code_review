@@ -203,8 +203,8 @@
     {
       "date": "2026-07-21",
       "overall": {
-        "done": 23,
-        "total": 163
+        "done": 47,
+        "total": 147
       },
       "tracks": {
         "transcript": {
@@ -212,8 +212,8 @@
           "total": 8
         },
         "mmrag": {
-          "done": 8,
-          "total": 38
+          "done": 10,
+          "total": 22
         },
         "brainmet": {
           "done": 0,
@@ -244,7 +244,7 @@
           "total": 5
         },
         "control-room": {
-          "done": 2,
+          "done": 24,
           "total": 36
         },
         "course": {
