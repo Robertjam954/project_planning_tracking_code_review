@@ -1316,8 +1316,8 @@
     {
       "date": "2026-08-11",
       "overall": {
-        "done": 54,
-        "total": 154
+        "done": 55,
+        "total": 159
       },
       "tracks": {
         "transcript": {
@@ -1357,8 +1357,8 @@
           "total": 5
         },
         "control-room": {
-          "done": 24,
-          "total": 36
+          "done": 25,
+          "total": 41
         },
         "course": {
           "done": 0,
