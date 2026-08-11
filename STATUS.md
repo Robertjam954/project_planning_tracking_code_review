@@ -55,6 +55,13 @@ single `- [x] N/A - <reason>` so the decision stays visible. Full rationale live
 - [ ] Run/session correlation id; token / latency metrics
 - [ ] Eval harness / LLM-judge over a golden request set (routing correctness + output shape) - build-lite; else `- [x] N/A`
 
+## 8. Middleware / guardrails / structured output (LangChain component model)
+- [ ] Middleware layer (before/after-model: logging / summarization) - else `- [x] N/A`
+- [ ] Guardrails: assert read-mostly (agents never write/push to project repos); input/output validation
+- [ ] Structured output: per-worker Pydantic response schema so the supervisor composes reliably
+- [ ] Human-in-the-loop: approval `interrupt` before the Planner writes files into a target repo - else `- [x] N/A`
+- [x] MCP (Model Context Protocol) - N/A - tools are local `@tool`s; revisit if a worker needs an external MCP server
+
 ## Cross-cutting
 - [x] Auth & secrets (`.env` only)
 - [ ] Deployment / hosting configured (CLI + scheduled Tracker via existing Action)
@@ -62,4 +69,4 @@ single `- [x] N/A - <reason>` so the decision stays visible. Full rationale live
 - [ ] Claude PR code-review workflow enabled on THIS repo (`templates/claude-review.yml`)
 - [x] README + `docs/agents-plan.md` updated to final state
 
-> Last doc sync: 2026-07-19
+> Last doc sync: 2026-08-11 · Detailed task breakdown: [`docs/agents-todo.md`](docs/agents-todo.md)
