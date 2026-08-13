@@ -23,10 +23,12 @@ you finish.
 ## 4. Modeling
 - [ ] Generate missing outputs: all Aim 2 & 3 survival / XGBoost-AFT result tables
 - [ ] Sensitivity checks on the fitted survival / ML models
+- [x] Implement the eight-step order-of-operations protocol: Table 1 + PRISMA flow chart, Fine-Gray competing-risk + Cox PH risk models, risk-model gene selection, Random Survival Forest with interpretation (validated on synthetic frames only; see `docs/analysis_order_of_operations.md`)
+- [ ] Run the order-of-operations protocol on the real cohorts (blocked on the same missing `data/processed/` frames as the Aims)
 
 ## 5. Reporting & repo hygiene
 - [x] Add requirements.txt / environment.yml with pinned versions (Python `requirements.txt` + conda `environment.yml` added; R `renv.lock` still pending)
-- [ ] Flesh out root README with setup + pipeline run order
+- [ ] Flesh out root README with setup + pipeline run order (order-of-operations stage documented; earlier stages still thin)
 - [x] Move/archive AI-workflow tutorial folders cluttering the research repo (-> `archive/`)
 - [ ] Publication figures finalized in `reports/figures/`
 - [ ] Reproducibility check: fresh clone runs the pipeline end-to-end
