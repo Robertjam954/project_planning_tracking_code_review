@@ -45,6 +45,60 @@ def new_agentic_project(
 
 
 @tool
+def build_dashboard() -> str:
+    """Rebuild the portfolio dashboard from current todos.
+
+    Runs `scripts/build_dashboard.py`, which snapshots today's progress into
+    `data/history.json` (idempotent per day) and regenerates `docs/index.html`
+    (the read surface). Writes only the control room's own state files - it never
+    touches project repos.
+
+    Returns:
+        The script's stdout summary, or an error string on failure.
+    """
+    result = subprocess.run(
+        ["python3", str(settings.scripts_dir / "build_dashboard.py")],
+        capture_output=True,
+        text=True,
+        cwd=settings.root,
+        timeout=60,
+    )
+    if result.returncode != 0:
+        return f"Error building dashboard: {result.stderr.strip()}"
+    return result.stdout.strip() or "Dashboard rebuilt (docs/index.html, data/history.json)."
+
+
+@tool
+def sync_status(dry_run: bool = False) -> str:
+    """Sync each tracked repo's STATUS.md into the local `todos/` mirror.
+
+    Runs `scripts/sync_status.py`, which pulls the latest STATUS.md from every
+    repo in `projects.json` (via `gh`) into `todos/*.md` so the dashboard reflects
+    upstream progress. Reads project repos only; writes only local `todos/` files.
+
+    Args:
+        dry_run: If True, report what would change without writing (passes
+            `--dry-run` to the script).
+
+    Returns:
+        The script's stdout summary, or an error string on failure.
+    """
+    cmd = ["python3", str(settings.scripts_dir / "sync_status.py")]
+    if dry_run:
+        cmd.append("--dry-run")
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        cwd=settings.root,
+        timeout=60,
+    )
+    if result.returncode != 0:
+        return f"Error syncing status: {result.stderr.strip()}"
+    return result.stdout.strip() or "Status sync complete."
+
+
+@tool
 def read_status() -> str:
     """Read all project todos and summarize completion.
 
@@ -184,7 +238,7 @@ def recall_history(query: str = "", session_id: str = "") -> str:
 
 # Tool subsets per worker
 PLANNER_TOOLS = [new_agentic_project]
-TRACKER_TOOLS = [read_status, read_history]
+TRACKER_TOOLS = [read_status, read_history, build_dashboard, sync_status]
 REVIEWER_TOOLS = [fetch_pr_reviews]
 HISTORIAN_TOOLS = [recall_history]
 SUPERVISOR_TOOLS = []  # Supervisor routes, doesn't call tools directly
