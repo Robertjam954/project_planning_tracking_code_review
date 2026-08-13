@@ -1,19 +1,23 @@
 """Agent node functions for the control-room graph.
 
-Each worker node is a callable that takes the current state, invokes the model
-with the worker's system prompt and tool subset, and returns updated state.
-The supervisor node routes to the correct worker.
+Each worker node is a LangChain agent (built with `create_agent`) that takes the
+current state, invokes its model with the worker's system prompt and tool subset,
+and returns updated state. The supervisor node routes to the correct worker.
+
+Refactored onto the LangChain agent template (`langchain.agents.create_agent`):
+one shared model config, one agent object per role. See the LangChain "Core
+components" docs (Model / Tools / System prompt) for the template this follows.
 """
 from __future__ import annotations
 
-import json
 from typing import Any
 
-from anthropic import Anthropic
+from langchain.agents import create_agent
+from langchain.chat_models import init_chat_model
+from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.types import Command
 
 from .config import settings
-from .memory import ConversationStore
 from .prompts import get_prompt
 from .state import ControlRoomState
 from .tools import (
@@ -23,92 +27,74 @@ from .tools import (
     TRACKER_TOOLS,
 )
 
+# Tool subset per worker role.
+_ROLE_TOOLS = {
+    "planner": PLANNER_TOOLS,
+    "tracker": TRACKER_TOOLS,
+    "reviewer": REVIEWER_TOOLS,
+    "historian": HISTORIAN_TOOLS,
+}
 
-def _call_worker(
-    state: ControlRoomState, role: str, tools: list
-) -> dict[str, Any]:
-    """Invoke a worker with the LLM, using its tool subset.
+# Lazily-built, cached agent objects + shared model, keyed so a CLI `--model`
+# override (which mutates settings.model) rebuilds them instead of going stale.
+_MODEL: Any = None
+_MODEL_KEY: tuple[str, float] | None = None
+_AGENTS: dict[str, Any] = {}
+
+
+def _model_key() -> tuple[str, float]:
+    return (settings.model, settings.temperature)
+
+
+def _get_model() -> Any:
+    """Return the shared chat model, rebuilding it if settings changed."""
+    global _MODEL, _MODEL_KEY, _AGENTS
+    key = _model_key()
+    if _MODEL is None or _MODEL_KEY != key:
+        _MODEL = init_chat_model(
+            f"anthropic:{settings.model}",
+            temperature=settings.temperature,
+        )
+        _MODEL_KEY = key
+        _AGENTS = {}  # invalidate cached agents bound to the old model
+    return _MODEL
+
+
+def _get_agent(role: str) -> Any:
+    """Return the cached `create_agent` for a role, building it on first use."""
+    model = _get_model()  # may reset _AGENTS if the model changed
+    if role not in _AGENTS:
+        _AGENTS[role] = create_agent(
+            model=model,
+            tools=_ROLE_TOOLS[role],
+            system_prompt=get_prompt(role),
+        )
+    return _AGENTS[role]
+
+
+def _call_worker(state: ControlRoomState, role: str, tools: list) -> dict[str, Any]:
+    """Invoke a worker agent with its tool subset.
 
     Args:
         state: Current graph state
         role: Worker name (planner, tracker, reviewer, historian)
-        tools: List of @tool callables available to this worker
+        tools: Kept for signature compatibility; the tool subset is bound to the
+            agent via `_ROLE_TOOLS[role]` at build time.
 
     Returns:
-        {"messages": updated messages} to append to state
+        {"messages": [...]} to append to state (LangChain message objects).
     """
     settings.require_api_key()
-    client = Anthropic()
+    agent = _get_agent(role)
 
-    # Tool definitions for Claude
-    tool_defs = []
-    for tool_fn in tools:
-        tool_defs.append({
-            "name": tool_fn.name,
-            "description": tool_fn.description,
-            "input_schema": {
-                "type": "object",
-                "properties": tool_fn.input_schema.get("properties", {}),
-                "required": tool_fn.input_schema.get("required", []),
-            },
-        })
-
-    system = get_prompt(role)
-    messages = [{"role": msg.get("role"), "content": msg.get("content")} for msg in state["messages"]]
-
-    # Agentic loop: keep calling until model says DONE or we hit the step cap
-    step = 0
-    max_steps = settings.max_tool_steps
-    while step < max_steps:
-        step += 1
-        response = client.messages.create(
-            model=settings.model,
-            max_tokens=2048,
-            temperature=settings.temperature,
-            system=system,
-            tools=tool_defs,
-            messages=messages,
-        )
-
-        # Append assistant response to message history
-        assistant_content = []
-        for block in response.content:
-            if hasattr(block, "text"):
-                assistant_content.append({"type": "text", "text": block.text})
-            elif hasattr(block, "type") and block.type == "tool_use":
-                assistant_content.append({
-                    "type": "tool_use",
-                    "id": block.id,
-                    "name": block.name,
-                    "input": block.input,
-                })
-        messages.append({"role": "assistant", "content": assistant_content})
-
-        # If no tool calls, we're done
-        tool_calls = [b for b in response.content if hasattr(b, "type") and b.type == "tool_use"]
-        if not tool_calls or response.stop_reason == "end_turn":
-            break
-
-        # Execute tool calls
-        tool_results = []
-        for tool_call in tool_calls:
-            try:
-                tool_fn = next(t for t in tools if t.name == tool_call.name)
-                result = tool_fn.invoke(tool_call.input)
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": tool_call.id,
-                    "content": str(result),
-                })
-            except Exception as e:
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": tool_call.id,
-                    "content": f"Error: {e}",
-                })
-        messages.append({"role": "user", "content": tool_results})
-
-    return {"messages": messages}
+    result = agent.invoke(
+        {"messages": state["messages"]},
+        config={"recursion_limit": max(2, settings.max_tool_steps * 2)},
+    )
+    # `create_agent` returns the full running message list; the graph's
+    # MessagesState reducer de-duplicates by id, so returning it is safe and
+    # appends only the new turns.
+    return {"messages": result["messages"]}
 
 
 def supervisor_node(state: ControlRoomState) -> Command[ControlRoomState]:
@@ -116,40 +102,39 @@ def supervisor_node(state: ControlRoomState) -> Command[ControlRoomState]:
 
     Uses the supervisor prompt to decide which worker to invoke (planner, tracker,
     reviewer, historian) based on the user's latest message. For ambiguous requests,
-    clarifies intent before routing.
+    clarifies intent before routing. Uses the shared LangChain chat model rather
+    than a raw provider client, for consistency with the worker agents.
     """
     settings.require_api_key()
-    client = Anthropic()
+    model = _get_model()
 
     system = get_prompt("supervisor")
-    messages = [{"role": msg.get("role"), "content": msg.get("content")} for msg in state["messages"]]
-
-    response = client.messages.create(
-        model=settings.model,
-        max_tokens=64,
-        temperature=0.0,
-        system=system,
-        messages=messages,
+    response = model.invoke(
+        [SystemMessage(content=system), *state["messages"]],
     )
 
-    worker_text = response.content[0].text.strip().lower()
+    text = response.content
+    if isinstance(text, list):
+        text = "".join(
+            part.get("text", "") if isinstance(part, dict) else str(part)
+            for part in text
+        )
+    worker_text = str(text).strip().lower()
 
     valid_workers = ("planner", "tracker", "reviewer", "historian", "end")
     if worker_text not in valid_workers:
         if "ambiguous" in worker_text or "clarify" in worker_text:
             first_line = worker_text.split("\n")[0]
             if first_line not in valid_workers:
-                messages.append({
-                    "role": "assistant",
-                    "content": f"I need clarification: {first_line}"
-                })
                 return Command(
                     goto="end",
                     update={
-                        "messages": messages,
+                        "messages": [
+                            HumanMessage(content=f"I need clarification: {first_line}")
+                        ],
                         "worker": "end",
-                        "context": "clarified"
-                    }
+                        "context": "clarified",
+                    },
                 )
         worker = "end"
     else:

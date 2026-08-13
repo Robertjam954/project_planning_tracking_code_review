@@ -47,7 +47,7 @@ single `- [x] N/A - <reason>` so the decision stays visible. Full rationale live
 - [x] CLI surface: `python -m agents "<request>"` wired to the graph
 - [x] Reuse rendered `docs/index.html` dashboard as the read surface
 - [ ] Error & empty/ambiguous-request states (supervisor clarifies, does not loop)
-- [ ] (Optional) Streamlit chat surface
+- [ ] (Optional) chat surface - React surface scaffolded in `frontend/` (markdown-messages pattern, LangGraph SDK); pending install + smoke test - see [`todos/control-room-frontend.md`](todos/control-room-frontend.md)
 - [x] Auth on the surface - N/A - local CLI
 
 ## 7. Tracing / observability / eval

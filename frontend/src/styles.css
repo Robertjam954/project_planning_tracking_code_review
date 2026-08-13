@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #7fc8ff;
+  --color-primary-light: #e5f4ff;
+  --color-primary-dark: #030710;
+
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f2faff;
+  --color-surface-tertiary: #e5f4ff;
+
+  --color-border: #b8dfff;
+  --color-border-hover: #99d4ff;
+
+  --color-text: #030710;
+  --color-text-secondary: #3d5166;
+  --color-text-tertiary: #6b8299;
+
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* Markdown prose inside chat bubbles */
+.markdown-content {
+  min-width: 0;
+  max-width: 100%;
+}
+.markdown-content p {
+  margin: 0.4em 0;
+}
+.markdown-content p:first-child {
+  margin-top: 0;
+}
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+.markdown-content ul,
+.markdown-content ol {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+}
+.markdown-content li {
+  margin: 0.15em 0;
+}
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin: 0.6em 0 0.3em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.markdown-content h1 {
+  font-size: 1.25em;
+}
+.markdown-content h2 {
+  font-size: 1.15em;
+}
+.markdown-content h3 {
+  font-size: 1.05em;
+}
+.markdown-content pre {
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0.4em 0;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--color-primary-dark) 5%, transparent);
+}
+.markdown-content code {
+  border-radius: 0.25rem;
+  background-color: color-mix(in srgb, var(--color-primary-dark) 8%, transparent);
+  padding: 0.125rem 0.25rem;
+  font-size: 0.75rem;
+}
+.markdown-content pre code {
+  display: block;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+.markdown-content table {
+  border-collapse: collapse;
+  margin: 0.4em 0;
+}
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid var(--color-border);
+  padding: 0.25em 0.5em;
+}
+.markdown-content blockquote {
+  margin: 0.4em 0;
+  padding-left: 0.75em;
+  border-left: 3px solid var(--color-primary);
+  opacity: 0.8;
+}
+.markdown-content hr {
+  margin: 0.6em 0;
+  border-color: var(--color-border);
+}

@@ -1,5 +1,7 @@
 # Control room agents - pinned dependencies
 anthropic>=0.42.0
+langchain>=1.0.0            # create_agent template + init_chat_model
+langchain-anthropic>=1.0.0  # anthropic provider for init_chat_model
 langgraph>=0.2.20
 langgraph-checkpoint-sqlite>=1.0.0
 langchain-core>=0.3.0
