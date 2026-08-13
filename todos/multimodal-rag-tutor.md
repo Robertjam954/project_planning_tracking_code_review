@@ -35,7 +35,12 @@ you finish.
 ## 3. Deployment health
 - [ ] Investigate: deployed app URL not responding (DNS resolves, HTTPS times out; `az` CLI blocked by corporate TLS reset - try ARM REST via curl or portal). URL: `https://ca-backend-terrjvrcuwxim.livelyisland-19dcdcfb.eastus2.azurecontainerapps.io`
 
-## 4. Docs & repo hygiene
+## 4. Portfolio frontend (GitHub Pages)
+- [x] `.github/workflows/pages.yml` deploys `site/` as-is (no Jekyll build, `.nojekyll` present)
+- [x] Live and green: last run succeeded 2026-07-13; `site/` unchanged on `main` since that deploy, so published content is current. URL: `https://robertjam954.github.io/multimodal_rag_application/`
+- [ ] Refresh the demo link on `site/index.html` once the deployed app URL issue (section 3) is resolved
+
+## 5. Docs & repo hygiene
 - [x] Update CLAUDE.md + ARCHITECTURE.md: search now provisionable-but-gated, `azure_search` retriever exists, Obsidian/local-mode direction (also synced README, PRODUCT, SECURITY, CONTRIBUTING - 2026-07-20)
 - [ ] Update portfolio todos (`project_planning_tracking_code_review/todos/multimodal-rag-tutor.md`) to reflect the pivot
 - [ ] Pre-existing: CI workflows, eval population, Stage 2 functions (see todos file)
