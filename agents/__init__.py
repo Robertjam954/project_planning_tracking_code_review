@@ -5,4 +5,4 @@ workers over the portfolio's existing scripts and files. See docs/agents-plan.md
 and docs/adr/0002 + 0003.
 """
 
-__all__ = ["config", "graph", "memory", "nodes", "prompts", "state", "tools", "tracing"]
+__all__ = ["config", "graph", "memory", "middleware", "nodes", "prompts", "state", "tools", "tracing"]
